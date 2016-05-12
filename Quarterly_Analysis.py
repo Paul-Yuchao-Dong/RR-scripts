@@ -92,7 +92,7 @@ class RR_A():
         try:
             t_date = pd.to_datetime(t_date)
         except:
-            print "Date Format Issue"
+            print("Date Format Issue")
             return None
         t_active_mask = (self.data.L_START<= t_date) & (self.data.L_END>= t_date) # all leases active in the month's end
         et_mask = ~((pd.notnull(self.data.ET_DATE)) & (self.data.ET_DATE<t_date)) # exclude leases that has been early terminated before month end
