@@ -12,7 +12,7 @@ from pandas.tseries.offsets import Second
 import xlwings as xw
 from xlwings import Workbook, Range, Sheet
 
-from RR_converter import RR_convert
+from RR_scripts.RR_converter import RR_convert
 
 
 # In[4]:
