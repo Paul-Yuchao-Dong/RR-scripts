@@ -67,7 +67,7 @@ def RR_convert(Path = r'U:\Refinancing analysis\Model',\
 			.dropna(axis=1, how='all')      
 			)
 	# ####LMS data was generated from a database, so it is most likely type consistent
-	df = (df.assign(contract_months = lambda x: map(months_between, x[u'契約期間　異動日'], x[u'Lease_Term_　End']),
+	df = (df.assign(contract_months = lambda x: list(map(months_between, x[u'契約期間　異動日'], x[u'Lease_Term_　End'])),
 					base_rent = lambda d: d[u'Rent_Monthly(Yen)']/1000.0,
 					rent_start = lambda d: pd.to_datetime(d[u'賃料発生日'], dayfirst = True)
 					)
