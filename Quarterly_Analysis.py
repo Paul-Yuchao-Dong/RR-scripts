@@ -32,8 +32,8 @@ def t_month_start(target_month, target_year):
 
 def human_quarter(q_string):
     s = re.split('Q|q|\W+', q_string)
-    s = filter(None, s)
-    s = map(int, map(str.strip, s))
+    s = list(filter(None, s))
+    s = list(map(int, map(str.strip, s)))
     year = max(s)
     quarter = min(s)
     return year, quarter
