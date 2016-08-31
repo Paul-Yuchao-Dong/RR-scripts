@@ -96,7 +96,21 @@ class RR_A():
             return None
         t_active_mask = (self.data.L_START<= t_date) & (self.data.L_END>= t_date) # all leases active in the month's end
         et_mask = ~((pd.notnull(self.data.ET_DATE)) & (self.data.ET_DATE<t_date)) # exclude leases that has been early terminated before month end
-        return RR_A(data = self.data[t_active_mask & et_mask])
+        
+        df = self.data[t_active_mask & et_mask].copy()
+        
+        df = df.assign(main_ls_num = df['Ls_no'].str.split('-').str[0],
+                       sub_ls_num = df['Ls_no'].str.split('-').str[1].astype(int)) # separate the lease no
+    
+        df = df.reset_index()
+        
+        init_groups = df.groupby(['main_ls_num', 'FL']) # this only groups the main lease no
+        
+        ls_maxes = init_groups.sub_ls_num.transform(max) # find the largest lease no in each category
+        
+        df = df[df.sub_ls_num == ls_maxes] # filter out the older leases
+        
+        return RR_A(data = df)
     
     def lease_calc(self, active_mask = None):
         #Calculation of performance
